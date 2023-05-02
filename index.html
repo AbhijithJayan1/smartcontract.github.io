@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SMART CONTRACT TEST</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.2.7-rc.0/web3.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body{
+			text-align: center;
+		}
+		button {
+              background-color: #4CAF50;
+              border: none;
+              color: white;
+              padding: 8px 16px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 14px;
+              margin: 4px 2px;
+              cursor: pointer;
+              border-radius: 4px;
+            }
+        button:hover {
+            background-color: yellow;
+        }
+        input {
+            width: 40%;
+            height: 33px;
+            font-size: 30px;
+        }
+		nav {
+	margin: 27px auto 0;
+
+	position: relative;
+	width: 100% ;
+	height: fit-content ;
+	background-color: #34495e;
+	border-radius: 8px;
+	font-size: 0;
+}
+nav a {
+	line-height: 50px;
+	height: 100%;
+	font-size: 15px;
+	display: inline-block;
+	position: relative;
+	z-index: 1;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	color: white;
+	cursor: pointer;
+}
+a:hover {
+  color: rgb(255, 255, 255);
+}
+nav .animation {
+	position: absolute;
+	height: 100%;
+	top: 0;
+	z-index: 0;
+	transition: all .5s ease 0s;
+	border-radius: 8px;
+}
+a:nth-child(1) {
+	width: 12.5%;
+}
+a:nth-child(2) {
+	width: 12.5%;
+}
+a:nth-child(3) {
+	width: 12.5%;
+}
+a:nth-child(4) {
+	width: 12.5%;
+}
+a:nth-child(5) {
+	width: 12.5%;
+}
+a:nth-child(6) {
+	width: 12.5%;
+}
+a:nth-child(7) {
+	width: 12.5%;
+}
+a:nth-child(8) {
+	width: 12.5%;
+}
+nav .start-home, a:nth-child(1):hover~.animation {
+	width: 12.5%;
+	left: 0;
+	background-color: #1abc9c;
+}
+nav .start-topup, a:nth-child(2):hover~.animation {
+	width: 12.5%;
+	left: 12.5%;
+	background-color: #e74c3c;
+}
+nav .start-propd, a:nth-child(3):hover~.animation {
+	width: 12.5%;
+	left: 25%;
+	background-color: #3498db;
+}
+nav .start-contrd, a:nth-child(4):hover~.animation {
+	width: 12.5%;
+	left: 37.5%;
+	background-color: #9b59b6;
+}
+nav .start-pay, a:nth-child(5):hover~.animation {
+	width: 12.5%;
+	left: 50%;
+	background-color: #e67e22;
+}
+nav .start-trnh, a:nth-child(6):hover~.animation {
+	width: 12.5%;
+	left: 62.5%;
+	background-color: #49e622;
+}
+nav .start-feed, a:nth-child(7):hover~.animation {
+	width: 12.5%;
+	left: 75%;
+	background-color: #22aee6;
+}
+nav .start-logout, a:nth-child(8):hover~.animation {
+	width: 12.5%;
+	left: 87.5%;
+	background-color: #e8dd1b;
+}
+.table-wrapper{
+    margin: 30px 70px;
+    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+}
+
+.fl-table {
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: white;
+}
+
+.fl-table td, .fl-table th {
+    text-align: center;
+    padding: 8px;
+}
+
+.fl-table td {
+    border-right: 1px solid #f8f8f8;
+    font-size: 12px;
+}
+
+.fl-table thead th {
+    color: #ffffff;
+    background: #4FC3A1;
+}
+
+
+.fl-table thead th:nth-child(odd) {
+    color: #ffffff;
+    background: #324960;
+}
+
+.fl-table tr:nth-child(even) {
+    background: #F8F8F8;
+}
+
+/* Responsive */
+
+@media (max-width: 767px) {
+    .fl-table {
+        display: block;
+        width: 100%;
+    }
+    .table-wrapper:before{
+        content: "Scroll horizontally >";
+        display: block;
+        text-align: right;
+        font-size: 11px;
+        color: white;
+        padding: 0 0 10px;
+    }
+    .fl-table thead, .fl-table tbody, .fl-table thead th {
+        display: block;
+    }
+    .fl-table thead th:last-child{
+        border-bottom: none;
+    }
+    .fl-table thead {
+        float: left;
+    }
+    .fl-table tbody {
+        width: auto;
+        position: relative;
+        overflow-x: auto;
+    }
+    .fl-table td, .fl-table th {
+        padding: 20px .625em .625em .625em;
+        height: 60px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 120px;
+        font-size: 13px;
+        text-overflow: ellipsis;
+    }
+    .fl-table thead th {
+        text-align: left;
+        border-bottom: 1px solid #f7f7f9;
+    }
+    .fl-table tbody tr {
+        display: table-cell;
+    }
+    .fl-table tbody tr:nth-child(odd) {
+        background: none;
+    }
+    .fl-table tr:nth-child(even) {
+        background: transparent;
+    }
+    .fl-table tr td:nth-child(odd) {
+        background: #F8F8F8;
+        border-right: 1px solid #E6E4E4;
+    }
+    .fl-table tr td:nth-child(even) {
+        border-right: 1px solid #E6E4E4;
+    }
+    .fl-table tbody td {
+        display: block;
+        text-align: center;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row content">
+		  <div class="col-sm-12 sidenav">
+			<h2 style="font-family: fantasy; text-align: left;">Tenant Dashboard</h2>
+			<nav>
+			  <a href="#">Home</a>
+			  <a href="#">TOPUP_WALLET</a>
+			  <a href="#">PROPERTY_DETAILS</a>
+			  <a href="#">CONTRACT_DETAILS</a>
+			  <a href="#">PAY_RENT</a>
+			  <a href="#">TRANSACTION_HISTORY</a>
+			  <a href="#">FEEDBACK</a>
+			  <a href="#">LOGOUT</a>
+			  <div class="animation start-contrd"></div>
+			</nav>
+		  </div>
+		  <br>
+		  
+		  <div class="col-sm-9" style="width: 100%;">
+			
+			<div style="margin: 50px 30px;">
+				<button onclick="connectMetamask()">CONNECT TO METAMASK</button> <br>
+				<p id="accountArea">Connection Status: NOT CONNECTED to Metamask </p>
+			
+				<button onclick="connectContract()">CONNECT TO CONTRACT</button> <br>
+				<p id="contractArea">Connection Status: NOT CONNECTED to Smart Contract</p>
+			
+				<button onclick="getContractAccount()"> GET CONTRACT ACCOUNT </button>
+				<p id="contractAccount">Contract Account: Not Connected to Contract</p>
+			</div>
+			<div class="table-wrapper">
+				<h2>TENANT DETAILS</h2>
+			<table  id='dataTbl' class="fl-table">
+				<thead>
+				  <tr>
+					<th scope="col">Register No.</th>
+					<th scope="col">Name</th>
+					<th scope="col">Mobile No.</th>
+					<th scope="col">Mail Id</th>
+					<th scope="col">Address</th>
+					<th scope="col">City</th>
+					<th scope="col">State</th>
+					<th scope="col">Wallet</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr></tr>
+				</tbody>
+			  </table>
+			  </div>
+
+			  <div class="table-wrapper">
+				<h2>LANDLORD DETAILS</h2>
+				<table  id='dataTb2' class="fl-table">
+					<thead>
+					  <tr>
+						<th scope="col">Register No.</th>
+						<th scope="col">Name</th>
+						<th scope="col">Mobile No.</th>
+						<th scope="col">Mail Id</th>
+						<th scope="col">Address</th>
+						<th scope="col">City</th>
+						<th scope="col">State</th>
+						<th scope="col">Wallet</th>
+					  </tr>
+					</thead>
+					<tbody>
+					  <tr></tr>
+					</tbody>
+				  </table>
+				  </div>
+
+				  <div class="table-wrapper">
+					<h2>PROPERTY DETAILS</h2>
+					<table  id='dataTb3' class="fl-table">
+						<thead>
+						  <tr>
+							<th scope="col">Register No.</th>
+							<th scope="col">Type</th>
+							<th scope="col">Location</th>
+							<th scope="col">Start Date</th>
+							<th scope="col">End Date</th>
+							<th scope="col">Rent</th>
+							<th scope="col">Deposit</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr></tr>
+						</tbody>
+					  </table>
+					  </div>
+
+				<div style="display: grid; grid-template-columns: 1fr 1fr; row-gap: 20px;">
+				<label>Property ID: </label>
+				<input type="text" id="pid" readonly>
+				<label>Landlord ID: </label>
+				<input type="text" id="tid" readonly>
+				<label>Tenant ID: </label>
+				<input type="text" id="lid" readonly>
+				<label>Landlord Wallet Address: </label>
+				<input type="text" id="lw" readonly>
+				<label>Tenant Wallet Address: </label>
+				<input type="text" id="tw" readonly>
+				<label>Landlord Mobile No.: </label>
+				<input type="text" id="lmob" readonly>
+				<label>Tenant Mobile No </label>
+				<input type="text" id="tmob" readonly>
+				<label>Starting Date: </label>
+				<input type="text" id="sdate" readonly>
+				<label>Ending Date: </label>
+				<input type="text" id="ldate" readonly>
+				<label>Rent amount: </label>
+				<input type="text" id="rent" readonly>
+				<label>Deposit amount: </label>
+				<input type="text" id="depo" readonly>
+				<label>Contract Address: </label>
+				<input type="text" id="cadd" readonly>
+				<label>Contract Status: </label>
+				<input type="text" id="cstat" readonly><br>
+				</div>
+				<button onclick="activate()">SUBMIT</button><br><br>
+				<button onclick="displayData()">View Contract</button><br><br>
+				<button onclick="payRent()">Pay Rent</button><br><br>
+				<button onclick="Viewbalance()">View Balance</button><br><br>
+				<label>Balance: </label>
+				<input type="text" id="bal">
+			  </div>
+			  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+			  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+			  
+			  <script type="module">
+				// Import the functions you need from the SDKs you need
+				import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+				import { getDatabase, set, ref ,push, child, onValue, update} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+			  
+				// TODO: Add SDKs for Firebase products that you want to use
+				// https://firebase.google.com/docs/web/setup#available-libraries
+			  
+				// Your web app's Firebase configuration
+				const firebaseConfig = {
+					  apiKey: "AIzaSyCWlUuCtJMfN-6zc5BhAwpLa1OpPIQqsqk",
+					  authDomain: "propert-rental-5669d.firebaseapp.com",
+					  databaseURL: "https://propert-rental-5669d-default-rtdb.firebaseio.com",
+					  projectId: "propert-rental-5669d",
+					  storageBucket: "propert-rental-5669d.appspot.com",
+					  messagingSenderId: "680379316651",
+					  appId: "1:680379316651:web:c3338e8b66b7b585aebaee"
+				};
+			  
+				// Initialize Firebase
+				const app = initializeApp(firebaseConfig);
+				
+				// Get a reference to the database service
+				const database = getDatabase(app);
+				var T_idV,T_nameV,T_mobV,T_mailV,T_addrV,T_cityV,T_stateV,T_walletV;
+				var L_idV,L_nameV,L_mobV,L_mailV,L_addrV,L_cityV,L_stateV,L_walletV;
+				var P_idV,P_typeV,P_locV,S_dateV,L_DateV,P_rentV,P_depoV,C_addrV,C_statusV;
+	  
+	  
+			  
+				document.addEventListener('DOMContentLoaded', (e) => {
+
+					const dbRef = ref(database, 'Contract/' + 8);
+						try {
+						onValue(dbRef, (snapshot) => {
+							const childData = snapshot.val();
+							const row1 = "<tr><td>" + childData.T_id + "</td><td>" 
+							+ childData.T_name + "</td><td>" + childData.T_mob + "</td><td>" 
+							+ childData.T_mail + "</td><td>" + childData.T_addr + "</td><td>" + childData.T_city 
+							+ "</td><td>" + childData.T_state + "</td><td>" + childData.T_Wallet + "</td></tr>";
+							$(row1).appendTo('#dataTbl');
+							const row2 = "<tr><td>" + childData.L_id + "</td><td>" 
+							+ childData.L_name + "</td><td>" + childData.L_mob + "</td><td>" 
+							+ childData.L_mail + "</td><td>" + childData.L_addr + "</td><td>" + childData.L_city 
+							+ "</td><td>" + childData.L_state + "</td><td>" + childData.L_Waller + "</td></tr>";
+							$(row2).appendTo('#dataTb2');
+							const row3 = "<tr><td>" + childData.P_id + "</td><td>" 
+							+ childData.P_type + "</td><td>" + childData.P_loc + "</td><td>" 
+							+ childData.S_date + "</td><td>" + childData.L_date+ "</td><td>" + childData.P_rent 
+							+ "</td><td>" + childData.P_depo + "</td></tr>";
+							$(row3).appendTo('#dataTb3');
+							const row4 = "<tr><td>" + 8 + "</td><td>" 
+							+ childData.C_addr + "</td><td>" + childData.C_stat + "</td></tr>";
+							$(row4).appendTo('#dataTb4');
+							document.getElementById("pid").value =childData.P_id;
+							document.getElementById("tid").value =childData.T_id;
+							document.getElementById("tmob").value=childData.T_mob;
+							document.getElementById("tw").value=childData.T_Wallet;
+							document.getElementById("lid").value= childData.L_id;
+							document.getElementById("lmob").value=childData.L_mob;
+							document.getElementById("lw").value=childData.L_Waller;
+							document.getElementById("sdate").value=childData.S_date;
+							document.getElementById("ldate").value=childData.L_date;
+							document.getElementById("rent").value=childData.P_rent; 
+							document.getElementById("depo").value=childData.P_depo;
+							document.getElementById("cadd").value=childData.C_addr;
+							document.getElementById("cstat").value=childData.C_stat;
+					});
+				} 
+				catch (e) {
+					console.error(e);
+				}
+				
+			// redirect to new page with property details
+});
+	  
+			  </script>
+		  </div>
+		</div>
+	  </div>
+
+   
+
+    <script>
+        
+        function validatetnt() {
+        const nameInput1 = document.getElementById("tnt");
+        const nameinput2 = document.getElementById("lnd");
+        const lndlrd = nameinput2.value.trim();
+        const tntadr = nameInput1.value.trim();
+        if (tntadr == lndlrd) {
+            alert("Tenant's Address must not be Same as Landlord's Address");
+            nameInput1.value="";
+        }
+        }
+
+        let account;
+        const connectMetamask = async () => {
+            if(window.ethereum !== "undefined"){
+                const accounts = await ethereum.request({method: "eth_requestAccounts"});
+                account = accounts[0];
+                document.getElementById("accountArea").innerHTML = `Account is: ${account}`;
+            }
+
+        }
+
+        const connectContract = async () => {
+            const ABI =[
+	{
+		"inputs": [
+			{
+				"internalType": "address payable",
+				"name": "_lwallet",
+				"type": "address"
+			}
+		],
+		"name": "payRent",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_twallet",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_lwallet",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_tmob",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_lmob",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_pid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_tid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_lid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_sdate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_ldate",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_Rent",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_Deposit",
+				"type": "uint256"
+			}
+		],
+		"name": "setlist",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "balances",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getContractBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getlist",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "list",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "twallet",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "lwallet",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tmob",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lmob",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "sdate",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "ldate",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "Rent",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "Deposit",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+			const Address = "0xD1f881ce498Cde8fFA66282a9AcBa812bC1C52C7";
+            window.web3 = await new Web3(window.ethereum);
+            window.contract = await new window.web3.eth.Contract(ABI, Address);
+            document.getElementById("contractArea").innerHTML = "Connection Status: Success";
+        }
+
+        const getContractAccount = async () => {
+            const data = await window.contract.methods.getAddress().call();
+            document.getElementById("contractAccount").innerHTML = `Contract Account: ${data}`;
+        }
+
+        const activate = async () => {
+			const T_walletV = document.getElementById("tw").value;
+            const L_walletV = document.getElementById("lw").value;
+            const T_mobV = document.getElementById("tmob").value;
+			const L_mobV = document.getElementById("lmob").value;
+            const P_idV = document.getElementById("pid").value;
+            const T_idV = document.getElementById("tid").value;
+            const L_idV = document.getElementById("lid").value;
+            const S_dateV = document.getElementById("sdate").value;
+            const L_DateV = document.getElementById("ldate").value;
+            const P_rentV = document.getElementById("rent").value;
+            const P_depoV = document.getElementById("depo").value;
+            await window.contract.methods.setlist(T_walletV,L_walletV,T_mobV,L_mobV,P_idV,T_idV,L_idV,S_dateV,L_DateV,P_rentV,P_depoV).send({ from: account });
+			const data =await window.contract.methods.getAddress().call();
+			await window.contract.methods.getlist().call()
+			.then(result => {
+				
+				alert("Smart contract is deployed!");
+				document.getElementById("cstat").value="STARTED";
+				document.getElementById("cadd").value=`${data}`;
+			})
+			.catch(error => {
+				alert('Smart contract is not deployed yet.');
+			});
+
+        }
+
+        const display = async () => {
+            const data = await window.contract.methods.ContractAddress().call();
+            document.getElementById("dataArea0").innerHTML = `Address : ${data}`;
+        }
+
+		const displayData = async () => {
+
+			contract.methods.getlist().call().then((result) => {
+    			console.log(result); // displays the retrieved data
+  			})
+  			.catch((error) => {
+    			console.error(error); // handle error
+  			});
+		}
+		const payRent = async () => {
+			
+				const rentAmount = document.getElementById("rent").value;
+				const tenantAddress = document.getElementById("tnt").value;
+				const landlordAddress = document.getElementById("lnd").value;
+				contract.methods.payRent(landlordAddress).send({ from: tenantAddress, value: rentAmount });
+				
+			
+		}
+
+		const Viewbalance = async () => {
+            const data = await window.contract.methods.getContractBalance().call();
+            document.getElementById("bal").vlaue = `${data}`;
+        }
+
+
+
+
+
+        
+    </script>
+</body>
+</html>
